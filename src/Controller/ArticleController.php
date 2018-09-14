@@ -162,19 +162,29 @@ class ArticleController extends Controller
     /**
      * @Route("/commentregister/{id}", name="commentregister")
      */
-    public function commentregister($id, Request $request, ObjectManager $manager)
+    public function commentregister($id,Comment $comment = null, Article $article = null, Request $request, ObjectManager $manager)
     {
 
-      $article = new Article();
-      $comment = new Comment();
-      $em = $this->getDoctrine()->getManager();
+      // $article = new Article();
+      // $comment = new Comment();
 
-      $post = $em->getRepository($article)->find($id);
+      if(!$article){
+
+        $article = new Article();
+      }
+
+      if(!$comment){
+
+        $comment= new Comment();
+      }
 
 
+      $article = $this->getDoctrine()
+                      ->getRepository(Article::class)
+                      ->find($id);
 
-      $comment = $comment->setArticle($post);
-
+     $comment = $comment->setArticle($article);
+     $user = $this->getUser();
 
       $form = $this->createForm(CommentRegisterType::class, $comment);
 
@@ -184,7 +194,7 @@ class ArticleController extends Controller
 
       if($form->isSubmitted() && $form->isValid()){
 
-        $manager->persist($comment);
+        $manager->persist($article);
         $manager->flush();
 
         return $this->redirectToRoute('article');
@@ -192,7 +202,7 @@ class ArticleController extends Controller
         return $this->render('article/addcomment.html.twig', [
 
               'form' => $form->createView(),
-              'user' => $user
+              'user' => $user,
         ]);
     }
 
