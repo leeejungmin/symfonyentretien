@@ -1,0 +1,112 @@
+composer create-project symfony/skeleton my_project
+
+composer create-project symfony/website-skeleton my_project(이름)
+
+php bin/console server:start
+
+php bin/console debug:router
+
+
+template에서 html파일 만든다
+
+php bin/console make:controller(쉽게 만들수 있다.)
+
+composer require annotations(yaml에서 경로 지정안해줘도 된다.)
+
+php bin/console make:entity(database)
+
+php bin/console make:form
+
+php bin/console make:migration
+
+php bin/console doctrine:migrations:migrate
+
+<link rel="sytlesheet" href="{{asset('css/mystyle.css')}}"/>
+
+getbootstrap 
+bootstrapcdn
+bootswatch.com
+
+path{{'information'}}
+
+fors_user:
+	db_driver: orm
+	firewall_name:main
+	user_class: App\Entity\User
+	from_email:
+		address: "ljm3453@gmail.com"
+		sender_name: "jungmin"
+
+
+
+
+
+
+
+
+
+내가 해냈다 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  /**
+     * @Route("/amis/{id}/add", name="addamis")
+     * @Route("/amis/{id}/add/edit", name="addamis_edit")
+     */
+    public function Addamis($id, Amis $amis = null,Person $persons = null, Request $request, objectManager $manager)
+    {
+      if(!$amis){
+
+        $amis = new Amis();
+      }
+
+      if(!$persons){
+
+        $persons= new Person();
+      }
+      $persons = $this->getDoctrine()
+                      ->getRepository(Person::class)
+                      ->find($id);
+     
+     $amis = $amis->addAmisid($persons);
+
+
+       $form = $this->createFormBuilder($amis)
+
+                   ->add('prenom', TextType::class,['attr' => [
+                               'placeholder' => "Notez le nom de votre ami",
+
+                               ] ])
+                   ->add('Age',TextType::class,['attr' => [
+                               'placeholder' => "Notez l'age de votre ami.",
+
+                               ] ])
+                   ->add('location',TextType::class,['attr' => [
+                               'placeholder' => "Notez le location de votre ami.",
+
+                               ] ])
+
+                  ->getForm();
+
+
+                    $form->handleRequest($request);
+
+                    dump($amis);
+
+                    if($form->isSubmitted() && $form->isValid()){
+                      $manager->persist($amis);
+                      $manager->flush();
+
+                      return $this->redirectToRoute('amis',['id' => $persons->getId()]);
+
+                    };
+
+            return $this->render('inscription/amisadd.html.twig', [
+            'controller_name' => 'Jungmin',
+            'form' => $form->createView(),
+            ]);
+
+    }
+
+
+
+$formation=($person->getid(),$amis->getid())
+$manager->persit($foramtion)
