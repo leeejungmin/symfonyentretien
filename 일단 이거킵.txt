@@ -1,0 +1,63 @@
+  /**
+     * @Route("/amis/{id}/add", name="addamis")
+     */
+    public function Addamis($id, Amis $amis = null, Request $request, objectManager $manager)
+    {
+      if(!$amis){
+
+        $amis = new Amis();
+      }
+
+
+
+    $user = $this->getUser();
+
+
+     $amis = $amis->addAmi($user);
+
+
+       $form = $this->createFormBuilder($amis)
+
+                   ->add('prenom', TextType::class,['attr' => [
+                               'placeholder' => "Notez le nom de votre ami",
+
+                               ] ])
+                   ->add('age',TextType::class,['attr' => [
+                               'placeholder' => "Notez l'age de votre ami.",
+
+                               ] ])
+                   ->add('location',TextType::class,['attr' => [
+                               'placeholder' => "Notez le location de votre ami.",
+
+                               ] ])
+
+                  ->getForm();
+
+
+                    $form->handleRequest($request);
+
+                    dump($amis);
+
+                    if($form->isSubmitted() && $form->isValid()){
+                      $manager->persist($amis);
+                      $manager->flush();
+
+                      return $this->redirectToRoute('amis',['id' => $user->getId()]);
+
+                    };
+
+            return $this->render('inscription/amisadd.html.twig', [
+            'controller_name' => $user->getusername(),
+            'form' => $form->createView(),
+            ]);
+
+    }
+
+
+
+{{form_start(form)}}
+   {{form_widget(form)}}
+   {{ form_row(form.prenom,{'attr': {'value': amisrecommand.prenom }}) }}
+   {{ form_row(form.age,{'attr': {'value': amisrecommand.age }}) }}
+   {{ form_row(form.location, {'attr':{'value': amisrecommand.location }}) }}
+   {{form_end(form)}}

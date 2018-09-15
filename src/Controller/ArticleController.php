@@ -134,19 +134,7 @@ class ArticleController extends Controller
      */
     public function articledelete($id){
 
-      // // delete de object
-      // $entityManager = $this->getDoctrine()->getManager();
-      // $amis = $entityManager->getRepository(Amis::class)->find($id);
-      //
-      //
-      // $entityManager->remove($amis);
-      // $entityManager->flush();
-      //
-      //
-      // //amener la liste encore
-      // $user = $this->getUser();
-      // $ami = $user->getAmis();
-
+    
 
           $article = new Article();
 

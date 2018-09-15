@@ -33,10 +33,6 @@ class Comment
      */
     private $article;
 
-    /**
-     * @ORM\Column(type="string" length=255)
-     */
-    private $creatat;
 
     public function getId(): ?int
     {
@@ -81,15 +77,5 @@ class Comment
         return $this;
     }
 
-    public function getCreatat(): ?\DateTimeInterface
-    {
-        return $this->creatat;
-    }
-
-    public function setCreatat(\DateTimeInterface $creatat): self
-    {
-        $this->creatat = $creatat;
-
-        return $this;
-    }
+  
 }

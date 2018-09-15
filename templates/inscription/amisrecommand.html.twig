@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block body %}
+
+{% for ami in amisrecommand%}
+    <hr>
+      <p>Son prenom :  {{ami.prenom}}</p>
+      <p>Son age :  {{ami.age}}</p>
+      <p>Sa location :  {{ami.location}}</p>
+
+      <button type"submit" class="btn btn-success">Addamis</button>
+   
+    <hr>
+ {% endfor %}
+{% endblock %}

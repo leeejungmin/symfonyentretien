@@ -10,7 +10,7 @@
         <p>Son prenom :  {{ami.prenom}}</p>
         <p>Son age :  {{ami.age}}</p>
         <p>Sa location :  {{ami.location}}</p>
-        
+
 
           <button type"submit" class="btn btn-danger" onclick="window.location.href='/amisedelete/{{ami.id}}'">Supprime</button>
 
@@ -19,5 +19,4 @@
   {% endfor %}
 </section>
 
-<button type"submit" class="btn btn-success" onclick="window.location.href='/amis/{{id}}/add'">Addamis</button>
 {% endblock %}

@@ -42,7 +42,7 @@
       {% for comment in art.comments %}
         <div class="row">
           <div class="col-3">
-            {{comment.author}} (<small>{{comment.creatat | date('d/m/Y H:i' )}}</small>)
+            {{comment.author}}
           </div>
           <div class="col">
               {{comment.content | raw}}

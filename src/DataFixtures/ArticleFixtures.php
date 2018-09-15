@@ -50,12 +50,13 @@ class ArticleFixtures extends Fixture
 
                        $comment = new Comment();
                        $comment->setAuthor($faker->name())
-                               ->setContent($faker->paragraph())
-                               ->setCreatat(new \DateTime());
+                               ->setContent($faker->paragraph());
+                               // ->setCreatat(new \DateTime());
                              $manager->persist($comment);
         }
 
 
   }
   $manager->flush();
-}}
+}
+}

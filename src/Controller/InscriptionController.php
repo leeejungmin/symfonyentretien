@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ RegistrationType;
+use App\Form\ AmisRegisterType;
 
 class InscriptionController extends Controller
 {
@@ -142,6 +143,56 @@ class InscriptionController extends Controller
             'id' => $id,
 
         ]);
+    }
+
+    /**
+     * @Route("/amis/recommand", name="amisrecommand")
+     */
+    public function Amisrecommand( Amis $amis = null, Request $request, objectManager $manager)
+    {
+
+      // pour ajouter quelqu'un
+      if(!$amis){
+
+        $amis = new Amis();
+      }
+      //pour monter amis de recommand
+
+
+        $repo = $this->getDoctrine()->getRepository(Amis::class);
+
+        $amisrecommand = $repo->findAll();
+
+        //pour ajouter quelqu'un
+        $user = $this->getUser();
+
+        $amis = $amis->addAmi($user);
+
+        $form = $this->createForm(AmisRegisterType::class, $amis);
+
+
+
+
+       // $amis = $user->getAmis();
+
+
+         $form->handleRequest($request);
+
+         dump($amis);
+
+         if($form->isSubmitted() && $form->isValid()){
+           $manager->persist($amis);
+           $manager->flush();
+
+           return $this->redirectToRoute('amis',['id' => $user->getId()]);
+
+         };
+
+       return $this->render('inscription/amisrecommand.html.twig', [
+       'controller_name' => $user->getusername(),
+       'form' => $form->createView(),
+       'amisrecommand' => $amisrecommand,
+       ]);
     }
 
 
