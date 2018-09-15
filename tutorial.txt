@@ -110,3 +110,9 @@ fors_user:
 
 $formation=($person->getid(),$amis->getid())
 $manager->persit($foramtion)
+
+
+
+/////////////////////
+http://localhost:8000/commentregister/18
+https://stackoverflow.com/questions/28710085/symfony2-catchable-fatal-error-object-of-class-could-not-be-converted-to-string

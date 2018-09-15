@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +26,7 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-    
+
 
 
         return $this->render('inscription/index.html.twig', [
@@ -113,34 +115,29 @@ class InscriptionController extends Controller
      * @Route("/amisedelete/{id}", name="amisdelete")
      */
     public function amisdelete($id){
-          $amis = new Amis();
+
+
+
+          // delete de object
+          $entityManager = $this->getDoctrine()->getManager();
+          $amis = $entityManager->getRepository(Amis::class)->find($id);
+
+
+          $entityManager->remove($amis);
+          $entityManager->flush();
+
+
+          //amener la liste encore
           $user = $this->getUser();
-
-          $em = $this->getDoctrine()->getManager();
-
-          $post = $em->getRepository($amis)->find($id);
+          $ami = $user->getAmis();
 
 
 
-          if($form->isSubmitted() && $form->isValid()){
-
-            $em->remove($post);
-            $amis = $amis->removeAmi($user);
-            $em->flush();
-            $amis->flush();
-
-            return $this->redirectToRoute('amis');
-          }
-
-          $user = $this->getUser();
-          $id = $user->getId();
-
-          $amisuser = $amis->getUser();
 
         return $this->render('inscription/amis.html.twig', [
 
 
-            'amiss' => $amis,
+            'amis' => $ami,
             'user' => $user,
             'id' => $id,
 

@@ -14,7 +14,7 @@ class ArticleRegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('User', HiddenType::class, array('required'=> true))
+            
             ->add('age')
             ->add('race')
             ->add('famille', TextareaType::class)

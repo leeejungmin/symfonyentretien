@@ -34,7 +34,7 @@ class Comment
     private $article;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string" length=255)
      */
     private $creatat;
 
@@ -67,7 +67,7 @@ class Comment
         return $this;
     }
 
-  
+
 
     public function getArticle(): ?Article
     {

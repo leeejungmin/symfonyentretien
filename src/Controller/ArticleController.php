@@ -23,14 +23,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ArticleController extends Controller
 {
+  /**
+  * @Route("/article", name="article")
+  */
+  public function showarticle(){
+
+
+    $repo = $this->getDoctrine()->getRepository(Article::class);
+
+    $articles = $repo->findAll();
+
+
+    $user = $this->getUser();
+
+    return $this->render('article/article.html.twig', [
+
+
+      'articles' => $articles,
+
+      'user' => $user,
+
+    ]);
+  }
     /**
      * @Route("/article/register", name="articleregister")
      */
-    public function registerarticle(Article $article  ,Request $request, ObjectManager $manager)
+    public function registerarticle(Article $article = null  ,Request $request, ObjectManager $manager)
     {
+      if(!$article){
+
+        $article = new Article();
+      }
 
       $user = $this->getUser();
 
+      $article = $article->setUser($user);
 
       $form = $this->createForm(ArticleRegisterType::class, $article);
 
@@ -52,28 +79,6 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/article", name="article")
-     */
-    public function showarticle(){
-
-
-          $repo = $this->getDoctrine()->getRepository(Article::class);
-
-          $articles = $repo->findAll();
-
-
-          $user = $this->getUser();
-
-        return $this->render('article/article.html.twig', [
-
-
-            'articles' => $articles,
-
-            'user' => $user,
-
-        ]);
-    }
 
     /**
      * @Route("/articleupdate/{id}", name="articleupdate")
@@ -128,6 +133,21 @@ class ArticleController extends Controller
      * @Route("/articledelete/{id}", name="articledelete")
      */
     public function articledelete($id){
+
+      // // delete de object
+      // $entityManager = $this->getDoctrine()->getManager();
+      // $amis = $entityManager->getRepository(Amis::class)->find($id);
+      //
+      //
+      // $entityManager->remove($amis);
+      // $entityManager->flush();
+      //
+      //
+      // //amener la liste encore
+      // $user = $this->getUser();
+      // $ami = $user->getAmis();
+
+
           $article = new Article();
 
           $em = $this->getDoctrine()->getManager();
@@ -164,9 +184,12 @@ class ArticleController extends Controller
      */
     public function commentregister($id,Comment $comment = null, Article $article = null, Request $request, ObjectManager $manager)
     {
+      $user = $this->getUser();
 
-      // $article = new Article();
-      // $comment = new Comment();
+
+      // creer nowtime
+      $t=time();
+      $time=date("Y-m-d",$t);
 
       if(!$article){
 
@@ -184,8 +207,10 @@ class ArticleController extends Controller
                       ->find($id);
 
      $comment = $comment->setArticle($article);
-     $user = $this->getUser();
 
+
+
+     // creer la form
       $form = $this->createForm(CommentRegisterType::class, $comment);
 
       $form->handleRequest($request);
@@ -194,7 +219,7 @@ class ArticleController extends Controller
 
       if($form->isSubmitted() && $form->isValid()){
 
-        $manager->persist($article);
+        $manager->persist($comment);
         $manager->flush();
 
         return $this->redirectToRoute('article');
@@ -203,6 +228,7 @@ class ArticleController extends Controller
 
               'form' => $form->createView(),
               'user' => $user,
+              'time' => $time,
         ]);
     }
 

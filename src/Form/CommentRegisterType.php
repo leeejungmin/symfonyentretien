@@ -15,8 +15,14 @@ class CommentRegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    //   $date=new \DateTime();
+      $t=time();
+    // $dat =  $date->format('Y-m-d H:i:s');
+      $time=date("Y-m-d G:i:s",$t);
+    //
         $builder
-            ->add('article', HiddenType::class, array('required'=> true))
+            // ->add('creatat', HiddenType::class)
+            ->add('creatat',   array('data' => $time ))
             ->add('author', TextType::class)
             ->add('content', TextareaType::class)
 
