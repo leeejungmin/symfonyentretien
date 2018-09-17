@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block title %}Hello juktu!{% endblock %}
 {% block body %}
 
 {% for ami in amisrecommand%}
@@ -10,8 +10,7 @@
       <p>Son age :  {{ami.age}}</p>
       <p>Sa location :  {{ami.location}}</p>
 
-      <button type"submit" class="btn btn-success">Addamis</button>
-   
+      <button type"submit" class="btn btn-success" onclick="window.location.href='/amis/{{ami.id}}/treat'">Addamis</button>
     <hr>
  {% endfor %}
 {% endblock %}

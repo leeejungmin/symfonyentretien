@@ -57,9 +57,9 @@ class InscriptionController extends Controller
     }
 
     /**
-     * @Route("/amis/{id}/add", name="addamis")
+     * @Route("/amis/add", name="addamis")
      */
-    public function Addamis($id, Amis $amis = null, Request $request, objectManager $manager)
+    public function Addamis( Amis $amis = null, Request $request, objectManager $manager)
     {
       if(!$amis){
 
@@ -137,7 +137,7 @@ class InscriptionController extends Controller
 
         return $this->render('inscription/amis.html.twig', [
 
-
+            'controller_name' => $user->getusername(),
             'amis' => $ami,
             'user' => $user,
             'id' => $id,
@@ -148,52 +148,37 @@ class InscriptionController extends Controller
     /**
      * @Route("/amis/recommand", name="amisrecommand")
      */
-    public function Amisrecommand( Amis $amis = null, Request $request, objectManager $manager)
+    public function Amisrecommand()
     {
-
-      // pour ajouter quelqu'un
-      if(!$amis){
-
-        $amis = new Amis();
-      }
-      //pour monter amis de recommand
-
-
         $repo = $this->getDoctrine()->getRepository(Amis::class);
 
         $amisrecommand = $repo->findAll();
 
-        //pour ajouter quelqu'un
-        $user = $this->getUser();
-
-        $amis = $amis->addAmi($user);
-
-        $form = $this->createForm(AmisRegisterType::class, $amis);
-
-
-
-
-       // $amis = $user->getAmis();
-
-
-         $form->handleRequest($request);
-
-         dump($amis);
-
-         if($form->isSubmitted() && $form->isValid()){
-           $manager->persist($amis);
-           $manager->flush();
-
-           return $this->redirectToRoute('amis',['id' => $user->getId()]);
-
-         };
-
        return $this->render('inscription/amisrecommand.html.twig', [
-       'controller_name' => $user->getusername(),
-       'form' => $form->createView(),
        'amisrecommand' => $amisrecommand,
        ]);
     }
 
+    /**
+     * @Route("/amis/{id}/treat", name="treat")
+     */
+    public function treatRecommand($id)
+    {
+
+      
+        $entityManager = $this->getDoctrine()->getManager();
+        $repo = $entityManager->getRepository(Amis::class);
+
+        $amis = $repo->find($id);
+
+        $user = $this->getUser();
+
+        $amis->addAmi($user);
+
+         $entityManager->persist($amis);
+         $entityManager->flush();
+
+      return $this->redirectToRoute('main');
+    }
 
 }

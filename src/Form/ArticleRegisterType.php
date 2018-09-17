@@ -14,11 +14,15 @@ class ArticleRegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            
+
             ->add('age')
             ->add('race')
             ->add('famille', TextareaType::class)
-            ->add('nourriture', TextareaType::class)
+            ->add('nourriture', TextareaType::class,
+             array('label' => 'photo',
+                  'required'   => false,
+                  'attr'=>array('placeholder' => 'pas besoin ajouter ou
+                  ajouter URL qui est  photo',)))
 
             ;
       }

@@ -46,10 +46,12 @@ class ArticleController extends Controller
     ]);
   }
     /**
+     * @Route("/articleedit/{id}", name="articleupdate")
      * @Route("/article/register", name="articleregister")
      */
-    public function registerarticle(Article $article = null  ,Request $request, ObjectManager $manager)
+    public function registerarticle(Article $article = null ,Request $request, ObjectManager $manager)
     {
+
       if(!$article){
 
         $article = new Article();
@@ -81,60 +83,11 @@ class ArticleController extends Controller
 
 
     /**
-     * @Route("/articleupdate/{id}", name="articleupdate")
-     */
-    public function articleupdate($id){
-
-          $article = new Article();
-
-          $em = $this->getDoctrine()->getManager();
-
-          $post = $em->getRepository($article)->find($id);
-
-          $form = $this->createFormBuilder($post)
-
-                      ->add('prenom', TextType::class,['attr' => [
-                                  'placeholder' => "Notez le nom de votre ami",
-
-                                  ] ])
-                      ->add('Age',TextType::class,['attr' => [
-                                  'placeholder' => "Notez l'age de votre ami.",
-
-                                  ] ])
-                      ->add('location',TextType::class,['attr' => [
-                                  'placeholder' => "Notez le location de votre ami.",
-
-                                  ] ])
-
-                     ->getForm();
-
-                     if($form->isSubmitted() && $form->isValid()){
-
-                       $manager->persist($article);
-                       $manager->flush();
-
-                       return $this->redirectToRoute('article');
-                     }
-
-          $user = $this->getUser();
-          $articleuser = $article->getUser();
-
-        return $this->render('article/article.html.twig', [
-
-
-            'articles' => $article,
-            'articlesuser' => $articleuser,
-            'user' => $user,
-
-        ]);
-    }
-
-    /**
      * @Route("/articledelete/{id}", name="articledelete")
      */
     public function articledelete($id){
 
-    
+
 
           $article = new Article();
 
@@ -176,8 +129,8 @@ class ArticleController extends Controller
 
 
       // creer nowtime
-      $t=time();
-      $time=date("Y-m-d",$t);
+      // $t=time();
+      // $time=date("Y-m-d",$t);
 
       if(!$article){
 

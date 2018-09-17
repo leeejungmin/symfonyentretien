@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
@@ -54,6 +54,7 @@ class SecurityController extends Controller
     public function logout(){
         return $this->render('security/login.html.twig');
     }
+
 
 
 }

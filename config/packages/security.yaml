@@ -25,58 +25,26 @@ security:
             logout:
               path: security_logout
               target: main
-              # default_target_path: security_login
-              # always_use_default_target_path: true
-
-          # logout: ~
-          # logout_on_user_change: true
-          # form_login:
-          #   csrf_token_generator: security.csrf.token_manager
-            # pattern: ^/
-            # http_basic: ~
-            # provider: our_db_provider
-            #     csrf_token_generator: security.csrf.token_manager
-        #
-        #     logout:       true
-        #     anonymous:    true
-        #     anonymous: ~
-        #     form_login:
-        #         login_path: login
-        #         check_path: login
-        # access_control:
-        #         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #         - { path: ^/admin/, role: ROLE_ADMIN }
 
 
 
 
 
-
-
-
-            # logout: ~
-            # logout_on_user_change: true
-            # form_login:
-            #   csrf_token_generator: security.csrf.token_manager
-          # form_login: in_database
-          #       login_path: login
-          #       check_path: login
-          #
-          # logout:
-          #   path: logout
-          #   target: main
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    #pour creer admin
+    # security:
+        # providers:
+        #   in_memory:
+        #     memory:
+        #       users:
+        #         damin:
+        #           password: kitten
+        #           roles: 'ROLE_ADMIN'
+    #
+    #   firewall:
+    #     main:
+    #   access_control:
+    #     -{ path: ^/admin/users, roles :ROLE_SUPER_ADMIN}
+    #     -{ path: ^/admin, roles :ROLE_ADMIN}
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

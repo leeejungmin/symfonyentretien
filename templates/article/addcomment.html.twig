@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{% block title %}Hello {{ user.Username }}!{% endblock %}
+{% block title %}Hello
+{% if  user %}
+ {{ user.Username }}!
+{% endif%}
+ {% endblock %}
 
 {% block body %}
  {{form_start(form)}}
