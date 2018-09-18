@@ -95,3 +95,23 @@ $product = $repository->findOneBy([
   
 
  return new Response('Check out this great product: '.$product->getName());
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------
+
+  $entityManager = $this->getDoctrine()->getManager();
+        $repo = $entityManager->getRepository(Amis::class);
+
+        $amis = $repo->find($id);
+
+        $user = $this->getUser();
+
+        $amis->addUser($user);
+
+         $entityManager->persist($amis);
+         $entityManager->flush();

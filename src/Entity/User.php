@@ -39,7 +39,7 @@ class User implements UserInterface
      */
     private $password;
     /**
-     * @Assert\EqualTo(propertyPath="password", message="vous n'avez pas tape le mem mot de passe")
+     * @Assert\EqualTo(propertyPath="password", message="vous n'avez pas tape le mem mot de passe" )
      */
     public $confirm_password;
 
@@ -58,10 +58,35 @@ class User implements UserInterface
      */
     private $amis;
 
+    /**
+      * Many Users have Many Users.
+      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
+      */
+     private $friendsWithMe;
+
+     /**
+      * Many Users have many Users.
+      * @ORM\ManyToMany(targetEntity="User", inversedBy="friendsWithMe")
+      * @ORM\JoinTable(name="friends",
+      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+      *      inverseJoinColumns={@ORM\JoinColumn(name="friend_user_id", referencedColumnName="id")}
+      *      )
+      */
+     private $myFriends;
+
+
+
+
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->amis = new ArrayCollection();
+        $this->users = new ArrayCollection();
+
+        $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -169,4 +194,45 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+    * @return array
+    */
+   public function getFriends()
+   {
+       return $this->friends->toArray();
+   }
+
+
+
+    /**
+     * @return Collection|myFriends[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->myFriends;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->myFriends->contains($user)) {
+            $this->myFriends[] = $user;
+            $user->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->myFriends->contains($user)) {
+            $this->myFriends->removeElement($user);
+            $user->removeUser($this);
+        }
+
+        return $this;
+    }
+
+
+
 }

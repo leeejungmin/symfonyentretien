@@ -23,28 +23,88 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ArticleController extends Controller
 {
+
+
   /**
   * @Route("/article", name="article")
   */
-  public function showarticle(){
+  public function showarticletest(){
 
+
+
+    $user = $this->getUser();
 
     $repo = $this->getDoctrine()->getRepository(Article::class);
 
     $articles = $repo->findAll();
 
 
-    $user = $this->getUser();
 
-    return $this->render('article/article.html.twig', [
+
+
+
+    return $this->render('article/articletest.html.twig', [
 
 
       'articles' => $articles,
 
       'user' => $user,
 
-    ]);
-  }
+    ]);}
+
+
+    /**
+    * @Route("/treattest/{id}", name="treattest")
+    */
+    public function treattest(Comment $comment=null,$id){
+
+      if(!$comment){
+
+         $comment= new Comment();
+       }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repo = $entityManager->getRepository(Article::class);
+
+        $article = $repo->find($id);
+
+        $author = $_POST["author"];
+        $content = $_POST["content"];
+
+        $comment->setAuthor($author)
+                ->setContent($content)
+                ->setArticle($article);
+
+       $entityManager->persist($comment);
+       $entityManager->flush();
+
+       return $this->redirectToRoute('article');
+
+     }
+
+  //    // depuis ici c'est realite pour utiliser
+  // /**
+  // * @Route("/article", name="article")
+  // */
+  // public function showarticle(){
+  //
+  //
+  //   $repo = $this->getDoctrine()->getRepository(Article::class);
+  //
+  //   $articles = $repo->findAll();
+  //
+  //
+  //   $user = $this->getUser();
+  //
+  //   return $this->render('article/article.html.twig', [
+  //
+  //
+  //     'articles' => $articles,
+  //
+  //     'user' => $user,
+  //
+  //   ]);
+  // }
     /**
      * @Route("/articleedit/{id}", name="articleupdate")
      * @Route("/article/register", name="articleregister")
