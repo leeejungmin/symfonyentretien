@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Hello juktu!{% endblock %}
+{% block title %}Hello {% endblock %}
 {% block body %}
 
 {% for ami in amisrecommand%}
     <hr>
-      <p>Son prenom :  {{ami.prenom}}</p>
-      <p>Son age :  {{ami.age}}</p>
-      <p>Sa location :  {{ami.location}}</p>
+      <p>Son email :  {{ami.email}}</p>
+    
 
       <button type"submit" class="btn btn-success" onclick="window.location.href='/amis/{{ami.id}}/treat'">Addamis</button>
     <hr>

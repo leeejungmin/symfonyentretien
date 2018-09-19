@@ -19,6 +19,27 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+
+
+        /**
+            * @param $myFriends
+            * @return User[]
+            */
+           public function findAllnotadd($myFriends): array
+           {
+               // automatically knows to select Products
+               // the "p" is an alias you'll use in the rest of the query
+               $qb = $this->createQueryBuilder('p')
+                   ->andWhere('p.myFriends =: myFriends')
+                   ->setParameter('myFriends', $myFriends)
+                   ->getQuery();
+
+               return $qb->execute();
+
+               // to get just one result:
+               // $product = $qb->setMaxResults(1)->getOneOrNullResult();
+           }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

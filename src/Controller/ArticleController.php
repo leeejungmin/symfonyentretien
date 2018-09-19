@@ -114,14 +114,21 @@ class ArticleController extends Controller
 
       if(!$article){
 
+
         $article = new Article();
       }
 
+      //   if (!$article) {
+      //     throw $this->createNotFoundException(
+      //         'No product found for id '.$id
+      //     );
+      // }
       $user = $this->getUser();
 
       $article = $article->setUser($user);
 
       $form = $this->createForm(ArticleRegisterType::class, $article);
+
 
       $form->handleRequest($request);
 

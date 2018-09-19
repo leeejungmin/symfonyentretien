@@ -41,7 +41,10 @@
         <a class="p-2 text-dark" href="{{path('security_logout')}}">Deconnexion</a>
         {% endif %}
       </nav>
+        {% if not app.user %}
       <a class="btn btn-outline-primary" href="{{path('security_registration')}}">Sign up</a>
+      {% else %}
+      {% endif %}
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">

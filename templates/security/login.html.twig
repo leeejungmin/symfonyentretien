@@ -5,6 +5,11 @@
 
 {% block body %}
 <form action="{{path('security_login')}}" method="post">
+  {% if error %}
+     <div class="alert alert-danger">
+         {{ error.messageKey|trans(error.messageData) }}
+     </div>
+  {% endif %}
   <div class="form-group">
     <input placeholder="votre email" required name="_username"
     type="text" class="form-control">
