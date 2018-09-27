@@ -1,6 +1,13 @@
 <section id="commentaires">
   {% for ami in person.amis%}
-
+<div ng-controller="amischerchController">
+  Search : <input type="text" placeholder="Cherche amis" ng-model="searchText" />
+  <br /> <br />
+  <tr ng-repeat="ami in amis | fliter:searchText">
+    <td>{{ami.username}} </td>
+    <td>{{ami.email}} </td>
+  </tr>
+</div>
 
   {%end for%}
 </section>

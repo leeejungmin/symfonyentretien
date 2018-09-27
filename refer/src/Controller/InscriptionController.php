@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,9 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ RegistrationType;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Form\ AmisRegisterType;
-use App\Repository;
 
 class InscriptionController extends Controller
 {
@@ -43,83 +42,79 @@ class InscriptionController extends Controller
      */
     public function Amis()
     {
-      // prends information d'user la
-        $user = $this->getUser();
+      $user = $this->getUser();
+        // $amis = new Amis();
 
+        // $entityManager = $this->getDoctrine()->getManager();
+        // $repo = $entityManager->getRepository(Amis::class);
+
+        $amis=$user->getAmi();
 
 
          dump($user);
-         //prends les informations d'user de lier a user la
-       $amis = $user->getUsers();
+
 
         return $this->render('inscription/amis.html.twig', [
-            'controller_name' => $user->getusername(),
+            'controller_name' => 'Jungmin',
             'amis' => $amis,
+            'user' -> $user,
             'id' => $user->getId(),
         ]);
     }
 
 
 
+
+
     /**
-     * @Route("/amis/add/", name="addamis")
+     * @Route("/amis/add", name="addami")
      */
-    public function addamis(){
+    public function Addami(  Request $request, objectManager $manager)
+    {
 
 
-          $user = $this->getUser();
+        $user = new User();
+
+        $amis = new Amis();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repo = $entityManager->getRepository(Amis::class);
+
+
+    // avoir id d'user
+        $user = $this->getUser();
+        $userid = $user->getId();
+
+
+        $form = $this->createForm(RegistrationType::class, $amis);
+
+        $form->handleRequest($request);
+
+        $amis=$repo->addAmi($user);
+
+
+        if($form->isSubmitted() && $form->isValid()){
+
+          $entitymanager->persist($amis);
+          $entitymanager->flush();
+
+          return $this->redirectToRoute('amis');
+        }
+
+
+
+
+     // $entityManager = $this->getDoctrine()->getManager();
+     // $repo = $entityManager->getRepository(User::class);
+
 
 
 
 
           return $this->render('inscription/amisadd.html.twig', [
-          'controller_name' => $user->getusername(),
-
-          'id' => $user->getId(),
+          'amisrecommand' => $amisrecommand,
+          'form' => $form,
           ]);
-    }
-
-    /**
-     * @Route("/amis/add/treat", name="addamiss")
-     */
-    public function Addamistreat( Request $request )
-    {
-
-
-        $amis = new User();
-
-
-//avoir les donne de user
-
-    $user = $this->getUser();
-    $userid = $user->getId();
-
-
-// recevoir le donne d'email
-    $email = $_POST["email"];
-
-
-
-// apporter les donnes de user
-     $entityManager = $this->getDoctrine()->getManager();
-     $repo = $entityManager->getRepository(User::class);
-
-// trouver les donne qui est meme que 'email'
-     $amis = $repo->findOneBy(['email' => $email]);
-
-
-
-// ajouter l'information de user en liant amis user
-
-     $amis ->addUser($user);
-
-    $entityManager->persist($amis);
-    $entityManager->flush();
-
-                      return $this->redirectToRoute('amis',['id' => $user->getId()]);
-
-
-
 
 
     }
@@ -135,14 +130,14 @@ class InscriptionController extends Controller
     public function amisdelete($id){
 
 
-          $user = $this->getUser();
-          // delete de object avec user id
+          // delete de object
           $entityManager = $this->getDoctrine()->getManager();
-          $repo = $entityManager->getRepository(User::class);
+          $repo = $entityManager->getRepository(Amis::class);
           $amis =$repo->find($id);
 
-          //couper le liaison user la dans user avec id
-          $amis->removeUser($user);
+          $user = $this->getUser();
+
+          $amis->removeAmi($user);
 
           $entityManager->persist($amis);
           $entityManager->flush();
@@ -163,18 +158,12 @@ class InscriptionController extends Controller
      */
     public function Amisrecommand()
     {
+        $repo = $this->getDoctrine()->getRepository(Amis::class);
 
-        // getuser la
-        $user = $this->getUser();
-        //utilise query builder
-        // $repo = $this->getDoctrine()->getRepository(User::class)->findAllnotadd($user);
-        $repo = $this->getDoctrine()->getRepository(User::class)->findAll();
-
-        $amisrecommand = $repo;
+        $amisrecommand = $repo->findAll();
 
        return $this->render('inscription/amisrecommand.html.twig', [
        'amisrecommand' => $amisrecommand,
-       'user' => $user,
        ]);
     }
 
@@ -183,22 +172,21 @@ class InscriptionController extends Controller
      */
     public function treatRecommand($id)
     {
-        // prend les information de user la
-        $user = $this->getUser();
+
 
         $entityManager = $this->getDoctrine()->getManager();
-        $repo = $entityManager->getRepository(User::class);
+        $repo = $entityManager->getRepository(Amis::class);
 
-        // aporter les donnes d'user avec id
         $amis = $repo->find($id);
 
-        //ajouter user la en liant avec user id
+        $user = $this->getUser();
+
         $amis->addUser($user);
 
          $entityManager->persist($amis);
          $entityManager->flush();
 
-      return $this->redirectToRoute('amis');
+      return $this->redirectToRoute('main');
     }
 
 }

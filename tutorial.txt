@@ -114,5 +114,72 @@ $manager->persit($foramtion)
 
 
 /////////////////////
+materializecss.com/forms.html
 http://localhost:8000/commentregister/18
 https://stackoverflow.com/questions/28710085/symfony2-catchable-fatal-error-object-of-class-could-not-be-converted-to-string
+----------------------------------------------------------------------------------------
+<button type"submit" class="btn btn-default" onclick="window.location.href='/amischerche/'">CHERCHE</button>
+
+https://afsy.fr/avent/2013/16-symfony-et-angularjs-tips
+<a href="../amischerche/amischerche.html" class="w3-bar-item w3-button">Cherch</a>
+
+{% verbatim %}
+    <ul>
+    {% for item in seq %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+{% endverbatim %}
+
+---------------------------------------------------------------
+
+
+
+<?php
+
+namespace ENGEL\AwesomeBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+
+class AmischercheController extends AbstractController
+{
+    /**
+     * @Route("/amischerche", name="amischerche")
+     */
+    public function index()
+    {
+        return $this->render('amischerche/amischerche.html.twig', [
+            'controller_name' => 'AmischercheController',
+        ]);
+    }
+
+    public function dashboardPage($page)
+   {
+       $data = DashboardController::getData();
+       return $this->render('ENGELAwesomeBundle:Awesome:dashboard.html.twig', $data);
+   }
+
+
+
+   // public function pageAction($page)
+   //  {
+   //      $method = $page.'Page';
+   //
+   //      if( !method_exists( $this, $method ) )
+   //          return $this->render('ENGELAwesomeBundle:Awesome:'.$page.'.html.twig');
+   //
+   //      return $this->$method($page);
+   //  }
+
+
+
+}
+
+-----------------
+https://symfony.com/doc/current/frontend/encore/page-specific-assets.html
+
+----------------------------
+problem route
+
+https://www.youtube.com/watch?v=L-hYd2DObTA&t=93s

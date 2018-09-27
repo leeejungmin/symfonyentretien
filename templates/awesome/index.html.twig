@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+
+{%  block body %}
+<div ng-app="leeApp">
+
+{% verbatim %}
+
+<div ng-controller="amischerchController" >
+  Search : <input type="text" placeholder="Cherche amis" ng-model="searchText" />
+  <br /> <br />
+  <li ng-repeat= "ami in amis | filter: searchText">
+  <td>[[ami.username]]</td>
+  <td>[[ami.email]]</td>
+  </li>
+
+
+{% endverbatim %}
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block javascripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// "use strict";
+
+var leeApp = angular.module('leeApp', ['ngRoute']);
+
+
+leeApp.
+  config([ '$routeProvider','$interpolateProvider', function($routeProvider, $interpolateProvider) {
+  $interpolateProvider.startSymbol('[[');
+  $interpolateProvider.endSymbol(']]');
+}])
+
+
+.controller('amischerchController',['$scope', '$http', function($scope, $http, $location){
+
+  $scope.amis=[];
+
+  $http.post("http://localhost/symfonyjung/user.php")
+  .then(function (response)
+    { console.log(response.data);
+      $scope.amis = response.data;},
+    function onError(reponse)
+    { console.log("essayer jungmin encore");
+
+    });
+
+
+    // $scope.amischerche=function(){
+    //     $http({
+    //       method:"POST",
+    //       url:"user.php",
+    //
+    //     }).then(function(reponse){
+    //       $scope.amis = reponse.data;
+    //
+    //       console.log(reponse.data);
+    //       // $location.path('/amischerch');
+    //     });
+    // }
+
+  }]);
+
+    </script>
+{% endblock %}
+</div>
+{% endblock %}
