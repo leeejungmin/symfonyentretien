@@ -2,26 +2,38 @@
 
 
 {%  block body %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div ng-app="leeApp">
-
 {% verbatim %}
 
-<div ng-controller="amischerchController" >
-  Search : <input type="text" placeholder="Cherche amis" ng-model="searchText" />
-  <br /> <br />
-  <li ng-repeat= "ami in amis | filter: searchText">
-  <td>[[ami.username]]</td>
-  <td>[[ami.email]]</td>
+<div class="form-group " ng-controller="amischerchController" >
+
+<div class="navbar navbar-default">
+
+<div class="form-group has-feedback">
+<span class="fa fa-search form-control-feedback"></span>
+Search :
+
+<br /><br />
+<input id="search" class="form-control" type="text" placeholder="Cherche amis" ng-model="searchText" />
+
+</div>
+</div>
+
+
+
+  <hr>
+  <li  ng-repeat= "ami in amis | filter: searchText">
+  <p>Prenom: [[ami.username]]</p>
+
+  <p>Son email: [[ami.email]]</p>
+
+  <hr>
   </li>
-
-
-{% endverbatim %}
-
-
 
   </div>
 
-
+{% endverbatim %}
 
 
 
@@ -66,7 +78,7 @@
 
 
 <script>
-// "use strict";
+
 
 var leeApp = angular.module('leeApp', ['ngRoute']);
 
@@ -92,18 +104,6 @@ leeApp.
     });
 
 
-    // $scope.amischerche=function(){
-    //     $http({
-    //       method:"POST",
-    //       url:"user.php",
-    //
-    //     }).then(function(reponse){
-    //       $scope.amis = reponse.data;
-    //
-    //       console.log(reponse.data);
-    //       // $location.path('/amischerch');
-    //     });
-    // }
 
   }]);
 
