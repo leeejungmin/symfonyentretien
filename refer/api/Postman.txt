@@ -1,0 +1,20 @@
+https://www.youtube.com/watch?v=Q-BpqyOT3a8 [nom de site]
+http://blog.jeonghwan.net/lectures/todomvc-angular/12/[""]
+https://afsy.fr/avent/2013/16-symfony-et-angularjs-tips["francais"]
+
+http://api.github.com/users/leeejungmin [post man]
+
+-----------------------------------------------
+https://github.com/settings/applications/new[git hub]
+https://developer.github.com/v3/[ aller ici ]
+
+
+http://api.github.com/users/leeejungmin?client_id=c9ba929b54e6863d515b&client_secret=17a14db96ba743f035748e67c32daae6b601035a'
+
+------------------------------------------------
+http://www.flicker.com/services/api/[le site api]
+apigee.com/console/twitter/[le site api ] ÁßÁö ...
+
+---------------------------------------------------
+json.parser.online.fr[json parser]
+
