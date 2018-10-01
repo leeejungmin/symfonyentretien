@@ -16,17 +16,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- <script src="{{ asset('https://code.angularjs.org/1.7.2/angular-route.min.js') }}"></script>
-    <script src="{{ asset('https://code.angularjs.org/1.7.2/angular-loader.min.js') }}"></script>
-    <script src="{{ asset('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}"></script>
-    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js') }}"></script>
+  ript src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js') }}"></script>
     <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js') }}"></script> -->
     <!-- <script src="{{ asset('../app.config.js') }}"></script> -->
-    <!-- <script src="{{ asset('js/aterialize.js') }}"></script> -->
-    <!-- <script src="{{ asset('js/init.js') }}"></script> -->
-    <!-- <script src="path/to/angular.js"></script> -->
-<!--
-    <script type="text/javascript" src="angular.min.js"></script>
-    <script type="text/javascript" src="angular-route.js"></script> -->
+
+
+    <script src="http://localhost/symfonyjung/ng-admin.min.js"></script>
+    <link rel="stylesheet" href="http://localhost/symfonyjung/ng-admin.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
@@ -42,7 +38,7 @@
     {% block stylesheets %}<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">{% endblock %}
 
     <!-- Custom styles for this template -->
-    <link href="pricing.css" rel="stylesheet">
+    <!-- <link href="pricing.css" rel="stylesheet"> -->
   </head>
 
   <body>
@@ -87,7 +83,7 @@
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
           <div class="col-12 col-md">
-            <img class="mb-2" src="../../assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+            <!-- <img class="mb-2" src="../../assets/brand/bootstrap-solid.svg" alt="" width="24" height="24"> -->
             <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
           </div>
           <div class="col-6 col-md">
@@ -124,50 +120,47 @@
     </div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script> -->
 
-
-    <!-- <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script> -->
 
 
   <script>
 // "use strict";
 
-  var leeApp = angular.module('leeApp', ['ngRoute']);
+  var leeApp = angular.module('leeApp', ['ngRoute', 'ng-admin']);
 
 
   leeApp.
-    config([ '$routeProvider','$interpolateProvider', function($routeProvider, $interpolateProvider) {
+    config([ '$routeProvider','$interpolateProvider','NgAdminConfigurationProvider', function($routeProvider, $interpolateProvider, NgAdminConfigurationProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
   }])
 
 
   .controller('amischerchController',['$scope', '$http', function($scope, $http, $location){
+    var nga = NgAdminConfigurationProvider;
+    var admin = nga.application('My First Admin');
+    nga.configure(admin);
 
-    $scope.amis=[];
 
-    $http.post("http://localhost/symfonyjung/user.php")
-    .then(function (response)
-      { console.log(response.data);
-        $scope.amis = response.data;},
-      function onError(reponse)
-      { console.log("essayer jungmin encore");
 
-      });
+    // $http.post("http://localhost:7000/api/users")
+
+
+    // .then(function (response)
+    //   { console.log(response.data);
+    //     $scope.amis = response.data;},
+    //   function onError(reponse)
+    //   { console.log("essayer jungmin encore");
+    //
+    //   });
+    // $http.post("http://localhost/symfonyjung/user.php")
+    // .then(function (response)
+    //   { console.log(response.data);
+    //     $scope.amis = response.data;},
+    //   function onError(reponse)
+    //   { console.log("essayer jungmin encore");
+    //
+    //   });
 
 
       // $scope.amischerche=function(){

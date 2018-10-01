@@ -11,8 +11,8 @@
 <div class="navbar navbar-default">
 
 <div class="form-group has-feedback">
-<span class="fa fa-search form-control-feedback"></span>
-Search :
+<span class="fa fa-search form-control-feedback">CHERCHE:</span>
+
 
 <br /><br />
 <input id="search" class="form-control" type="text" placeholder="Cherche amis" ng-model="searchText" />
@@ -94,7 +94,7 @@ leeApp.
 
   $scope.amis=[];
 
-  $http.post("http://localhost/symfonyjung/user.php")
+  $http.get("http://localhost:7000/api/users")
   .then(function (response)
     { console.log(response.data);
       $scope.amis = response.data;},
@@ -106,6 +106,10 @@ leeApp.
 
 
   }]);
+
+
+
+
 
     </script>
 {% endblock %}
